@@ -20,4 +20,17 @@ router.post('/contact',async(req,res)=>{
         res.status(500).json({message:"Error while saving Form data"});
     }
 })
+
+router.get('/orders', async (req, res) => {
+    try {
+      const data = await Contact.find(); 
+      if (!data || data.length === 0) {  
+        return res.status(404).json({ message: 'No orders found' });
+      }
+      res.status(200).json(data); 
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error }); 
+    }
+  });
+  
 module.exports=router;

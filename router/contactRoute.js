@@ -33,4 +33,22 @@ router.get('/orders', async (req, res) => {
     }
   });
   
+  router.delete('/delete/order', async (req, res) => {
+    try {
+        const { id } = req.body;
+        if (!id) {
+            return res.status(400).json({ msg: "ID is required" });
+        }
+        const result = await Contact.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).json({ msg: "Contact not found" });
+        }
+        res.status(200).json({ msg: "Contact deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+
 module.exports=router;
